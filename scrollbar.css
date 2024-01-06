@@ -1,0 +1,28 @@
+/* Works in WebKit/Blink browsers (Chrome, Safari, Opera) */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #333;
+    border-radius: 55px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #222;
+}
+
+/* Works in Firefox */
+html {
+    scrollbar-color: #333 #222;
+}
+
+/* Works in Microsoft Edge */
+body {
+    scrollbar-color: #333 #222;
+}
+
+/* Works in Firefox and Edge, for scrollbar width */
+body {
+    scrollbar-width: thin;
+}
