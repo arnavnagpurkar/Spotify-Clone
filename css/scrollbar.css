@@ -1,6 +1,6 @@
 /* Works in WebKit/Blink browsers (Chrome, Safari, Opera) */
 ::-webkit-scrollbar {
-    width: 12px;
+    width: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -9,7 +9,7 @@
 }
 
 ::-webkit-scrollbar-track {
-    background-color: #222;
+    background-color: #171717;
 }
 
 /* Works in Firefox */
