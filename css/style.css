@@ -109,7 +109,11 @@ body {
 }
 
 .spotify-playlists {
-    padding: 16px;
+    padding: 15px;
+}
+
+.spotify-playlists h1 {
+    padding: 15px;
 }
 
 .card-container {
@@ -124,7 +128,7 @@ body {
 .card {
     width: 200px;
     height: 300px;
-    padding: 15px 10px;
+    padding: 13px 13px 27px 13px;
     border-radius: 5px;
     background-color: #181818;
     position: relative;
@@ -141,6 +145,17 @@ body {
     border-radius: 5px;
 }
 
+.card:hover {
+    .play {
+        top: 160px;
+        opacity: 1;
+    }
+
+    background-color: #282828;
+    scale: 1.01;
+    border-radius: 10px;
+}
+
 .play {
     display: flex;
     justify-content: center;
@@ -154,19 +169,12 @@ body {
     top: 290px;
     right: 20px;
     opacity: 0;
-    transition: all 500ms ease-in-out;
+    transition: all 500ms ease-in-out, scale 100ms ease-in-out;
     cursor: pointer;
 }
 
-.card:hover {
-    .play {
-        top: 160px;
-        opacity: 1;
-    }
-
-    background-color: #282828;
-    scale: 1.01;
-    border-radius: 10px;
+.play:hover {
+    scale: 1.1;
 }
 
 .buttons>* {
@@ -213,7 +221,7 @@ body {
     border-radius: 25px;
     width: 70vw;
     padding: 12px;
-    height: 40px;
+    min-height: 40px;
 }
 
 .songbuttons {
@@ -221,6 +229,7 @@ body {
     justify-content: center;
     align-items: center;
     gap: 20px;
+    padding-bottom: 15px;
 }
 
 .song-list .info {
@@ -230,6 +239,11 @@ body {
     justify-content: center;
     padding-left: 25px;
     flex-direction: column;
+}
+
+.info div {
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
 .song-list {
@@ -296,20 +310,191 @@ body {
 
 .songbuttons img {
     cursor: pointer;
+    width: 30px;
 }
 
 .songbuttons img:hover {
     scale: 1.05;
 }
 
+.songinfo {
+    width: 255px;
+}
+
+.songtime {
+    width: 110px;
+}
+
 .songinfo,
 .songtime {
-    padding: 0 15px;
+    padding: 0 20px;
     color: black;
     font-weight: 500;
+    font-size: 18px;
 }
 
 .abovebar {
     display: flex;
     justify-content: space-between;
+}
+
+.hamburger {
+    display: none;
+}
+
+.close {
+    display: none;
+}
+
+/* Making it responsive */
+
+@media (max-width: 1500px) {
+    .left {
+        position: absolute;
+        left: -140%;
+        transition: all 500ms ease-in-out;
+        z-index: 1;
+        width: 400px;
+        background-color: black;
+        padding: 0;
+    }
+
+    .right {
+        width: 100vw;
+        margin: 15px;
+    }
+
+    .playbar {
+        width: calc(100vw - 85px);
+    }
+
+    .seekbar {
+        width: calc(100vw - 120px);
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    .hamburger img {
+        height: 35px;
+        width: 35px;
+    }
+
+    .changebtns-nav {
+        display: none;
+    }
+
+    .close {
+        display: block;
+    }
+
+    .close img {
+        height: 35px;
+        width: 35px;
+        position: absolute;
+        right: 50px;
+        top: 60px;
+    }
+
+    .card-container {
+        justify-content: center;
+        margin: 0;
+    }
+
+    .card {
+        margin-top: 105px;
+        scale: 1.35;
+    }
+
+    .card:hover {
+        scale: 1.4;
+    }
+
+    .abovebar {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .abovebar>* {
+        padding: 10px;
+    }
+
+    .songbuttons img {
+        width: 40px;
+    }
+
+    .songtime {
+        padding-bottom: 30px;
+    }
+
+    .songinfo,
+    .songtime {
+        font-size: 1.5em;
+        text-align: center;
+        width: 100%;
+    }
+
+    .spotify-playlists {
+        height: 83vh;
+    }
+}
+
+@media (max-width: 600px) {
+    .left {
+        width: 400px;
+    }
+
+    .right {
+        margin: 0;
+    }
+
+    .spotify-playlists {
+        height: 85vh;
+    }
+}
+
+@media (max-width: 400px) {
+    .buttons {
+        padding: 20px 0;
+    }
+
+    .buttons button {
+        font-size: 13px;
+    }
+
+    .loginbtn {
+        padding: 12px;
+    }
+
+    .card {
+        margin-top: 105px;
+        scale: 1.25;
+    }
+
+    .card:hover {
+        scale: 1.3;
+    }
+}
+
+@media (max-width: 350px) {
+    .card {
+        margin-top: 105px;
+        scale: 1.05;
+    }
+
+    .card:hover {
+        scale: 1.1;
+    }
+
+}
+
+@media (max-width: 302px) {
+    .signupbtn {
+        display: none;
+    }
+
+    .spotify-playlists h1 {
+        font-size: 1.9em;
+    }
 }

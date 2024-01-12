@@ -1,4 +1,5 @@
 let currentSong = new Audio();
+let songs;
 
 async function getSongs() {
     let a = await fetch("http://127.0.0.1:5000/assets/songs/");
@@ -68,7 +69,7 @@ async function main() {
     featureInProgress();
 
     // Get the list of all the songs
-    let songs = await getSongs();
+    songs = await getSongs();
     playMusic(songs[0], true)
 
     // Show all the songs in the playlist
@@ -121,6 +122,36 @@ async function main() {
         let percent = ((e.offsetX / e.target.getBoundingClientRect().width) * 100);
         document.querySelector(".circle").style.left = `${percent}%`;
         currentSong.currentTime = (currentSong.duration * percent) / 100;
+    })
+
+    // Add an event listner for hamburger
+    document.querySelector(".hamburger").addEventListener("click", () => {
+        document.querySelector(".left").style.left = "0";
+    })
+
+    // Add an event listner for closoing hamburger
+    document.querySelector(".close").addEventListener("click", () => {
+        document.querySelector(".left").style.left = "-140%";
+    })
+
+    // Add an event listner to previous button
+    previous.addEventListener("click", () => {
+        let index = songs.indexOf(currentSong.src.split("/").slice(-1)[0])
+        if (index == 0) {
+            alert("Can't play previous, this is the first song in the playlist !!");
+            throw new Error("Can't play previous")
+        }
+        playMusic(songs[index - 1])
+    })
+
+    // Add an event listner to previous button
+    next.addEventListener("click", () => {
+        let index = songs.indexOf(currentSong.src.split("/").slice(-1)[0])
+        if (index == songs.length - 1) {
+            alert("Can't play next, this is the last song in the playlist !!");
+            throw new Error("Can't play next")
+        }
+        playMusic(songs[index + 1])
     })
 
 }
