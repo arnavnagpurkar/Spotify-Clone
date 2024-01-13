@@ -96,12 +96,8 @@ body {
     padding: 0 40px;
 }
 
-.header .nav button {
-    cursor: pointer;
-}
-
-.header .nav button:hover {
-    scale: 1.1;
+.changebtns-nav {
+    cursor: not-allowed;
 }
 
 .logo img {
@@ -227,9 +223,10 @@ body {
 .songbuttons {
     display: flex;
     justify-content: center;
-    align-items: center;
     gap: 20px;
     padding-bottom: 15px;
+    position: relative;
+    top: 9px;
 }
 
 .song-list .info {
@@ -322,20 +319,30 @@ body {
 }
 
 .songtime {
-    width: 110px;
+    word-wrap: break-word;
+    word-break: break-all;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .songinfo,
 .songtime {
-    padding: 0 20px;
+    padding: 0 25px;
     color: black;
     font-weight: 500;
     font-size: 18px;
+    scale: 1.05;
 }
 
 .abovebar {
     display: flex;
     justify-content: space-between;
+}
+
+.abovebar * {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
 .hamburger {
@@ -346,9 +353,72 @@ body {
     display: none;
 }
 
+.time-volume {
+    display: flex;
+    margin: 0 15px;
+    padding: 0 20px;
+    width: 350px;
+}
+
+.volume {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    gap: 20px;
+    top: 5px;
+    left: 30px;
+}
+
+.volume img {
+    cursor: pointer;
+}
+
+.range {
+    position: relative;
+    top: 5px;
+}
+
+.range {
+    width: 200px;
+}
+
+input[type="range"] {
+    appearance: none;
+    width: 65%;
+    height: 10px;
+    background: #ddd;
+    border-radius: 25px;
+    outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    background: #4CAF50;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 15px;
+    height: 15px;
+    background: #4CAF50;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb:hover {
+    background: #45a049;
+}
+
+.changebtns-nav {
+    opacity: 0.5;
+}
+
 /* Making it responsive */
 
-@media (max-width: 1500px) {
+@media (max-width: 1450px) {
     .left {
         position: absolute;
         left: -140%;
@@ -417,7 +487,7 @@ body {
     }
 
     .abovebar>* {
-        padding: 10px;
+        padding: 5px 0;
     }
 
     .songbuttons img {
@@ -431,12 +501,22 @@ body {
     .songinfo,
     .songtime {
         font-size: 1.5em;
+        align-items: center;
+        justify-content: center;
         text-align: center;
         width: 100%;
     }
 
     .spotify-playlists {
         height: 83vh;
+    }
+
+    .time-volume {
+        width: 96%;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        left: 15px;
     }
 }
 
@@ -451,6 +531,10 @@ body {
 
     .spotify-playlists {
         height: 85vh;
+    }
+
+    .playbar {
+        width: calc(100vw - 60px);
     }
 }
 

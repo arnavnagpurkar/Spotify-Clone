@@ -154,6 +154,36 @@ async function main() {
         playMusic(songs[index + 1])
     })
 
+    // Add an event to volume
+    document.querySelector(".range").getElementsByTagName("input")[0].addEventListener("change", (e) => {
+        currentSong.volume = e.target.value / 100;
+        if (currentSong.volume == 0) {
+            document.querySelector(".volume").getElementsByTagName("img")[0].src = "assets/images/volume-mute.svg";
+        }
+        else if (currentSong.volume > 0 && currentSong.volume <= 0.5) {
+            document.querySelector(".volume").getElementsByTagName("img")[0].src = "assets/images/volume-low.svg";
+        }
+
+        else if (currentSong.volume > 0.5) {
+            document.querySelector(".volume").getElementsByTagName("img")[0].src = "assets/images/volume-high.svg";
+        }
+    })
+
+    // Add an event listner to directly mute and unmute
+    document.querySelector(".volume img").addEventListener("click", ()=>{
+        if (currentSong.volume>0) {
+            currentSong.volume = 0;
+            document.querySelector(".volume").getElementsByTagName("img")[0].src = "assets/images/volume-mute.svg";
+            document.querySelector(".range").getElementsByTagName("input")[0].value = 0;
+        }
+
+        else {
+            currentSong.volume = 1;
+            document.querySelector(".volume").getElementsByTagName("img")[0].src = "assets/images/volume-high.svg";
+            document.querySelector(".range").getElementsByTagName("input")[0].value = 100;
+        }
+    })
+
 }
 
 
