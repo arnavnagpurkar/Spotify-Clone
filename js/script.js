@@ -4,7 +4,7 @@ let currentFolder;
 
 async function getSongs(folder) {
     currentFolder = folder;
-    let response = await fetch(`/assets/songs/${folder}/`);
+    let response = await fetch(`/Spotify-Clone/assets/songs/${folder}/`);
     let text = await response.text();
     let div = document.createElement('div');
     div.innerHTML = text;
@@ -48,7 +48,7 @@ function featureInProgress() {
 }
 
 async function playMusic(track, pause = false) {
-    currentSong.src = `assets/songs/${currentFolder}/${track}`;
+    currentSong.src = `/Spotify-Clone/assets/songs/${currentFolder}/${track}`;
     await currentSong.load();
 
     // Update song information even if paused
