@@ -4,7 +4,7 @@ let currentFolder;
 
 async function getSongs(folder) {
     currentFolder = folder;
-    let response = await fetch(`http://127.0.0.1:5000/assets/songs/${folder}/`);
+    let response = await fetch(`/assets/songs/${folder}/`);
     let text = await response.text();
     let div = document.createElement('div');
     div.innerHTML = text;
@@ -91,7 +91,7 @@ function setupSongClickListeners() {
 }
 
 async function displayAlbums() {
-    let response = await fetch(`http://127.0.0.1:5000/assets/songs/`);
+    let response = await fetch(`/assets/songs/`);
     let text = await response.text();
     let div = document.createElement('div');
     div.innerHTML = text;
@@ -103,7 +103,7 @@ async function displayAlbums() {
         if (e.href.includes("/songs/")) {
             let folder = e.href.split("/").slice(-2)[0];
             // Get the metadata of the folder
-            let a = await fetch(`http://127.0.0.1:5000/assets/songs/${folder}/info.json/`);
+            let a = await fetch(`/assets/songs/${folder}/info.json/`);
             let response = await a.json();
             let cardContainer = document.querySelector(".card-container");
             cardContainer.innerHTML += `<div data-folder="${folder}" class="card">
