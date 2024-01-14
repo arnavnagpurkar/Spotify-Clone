@@ -142,7 +142,7 @@ async function main() {
     featureInProgress();
 
     // Get the list of all the songs
-    await getSongs("trending");
+    await getSongs("arijit-singh");
     playMusic(songs[0], true);
 
     // Display all the albums on the page
