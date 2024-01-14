@@ -1,24 +1,40 @@
 let currentSong = new Audio();
 let songs;
+let currentFolder;
 
-async function getSongs() {
-    let a = await fetch("http://127.0.0.1:5000/assets/songs/");
+async function getSongs(folder) {
+    currentFolder = folder;
+    let a = await fetch(`http://127.0.0.1:5000/assets/songs/${folder}/`);
     let response = await a.text();
-    // console.log(response)
     let div = document.createElement('div');
     div.innerHTML = response;
     let as = div.getElementsByTagName('a');
-    // console.log(as);
-    let songs = [];
+    songs = [];
 
     for (let index = 0; index < as.length; index++) {
         const element = as[index];
         if (element.href.endsWith(".mp3")) {
-            songs.push(element.href.split("/songs/")[1])
+            songs.push(element.href.split(`/songs/${folder}/`)[1])
         }
     }
 
-    return songs;
+    // Show all the songs in the playlist
+    let songUL = document.querySelector(".song-list").getElementsByTagName("ul")[0]
+    songUL.innerHTML = "";
+    for (const song of songs) {
+        let songName = decodeURI(song).split("-");
+        songUL.innerHTML += `<li>
+                <img class="invert" src="assets/images/music.svg" alt="music">
+                <div class="info">
+                    <div>${songName[0].replace(".mp3", "")}</div>
+                    <div>${songName[1].replace(".mp3", "")}</div>
+                </div>
+                <div class="playnow">
+                    <span>Play Now</span>
+                    <img class="invert" src="assets/images/play.svg" alt="play">
+                </div>
+            </li>`;
+    }
 };
 
 function featureInProgress() {
@@ -32,7 +48,7 @@ function featureInProgress() {
 };
 
 async function playMusic(track, pause = false) {
-    currentSong.src = `assets/songs/${track}`;
+    currentSong.src = `assets/songs/${currentFolder}/${track}`;
     await currentSong.load();
 
     // Update song information even if paused
@@ -48,6 +64,7 @@ async function playMusic(track, pause = false) {
         // Ensure the play button icon is set to play if paused
         play.src = "assets/images/play.svg";
     }
+
 }
 
 function secondsToMinutesSeconds(seconds) {
@@ -64,40 +81,32 @@ function secondsToMinutesSeconds(seconds) {
     return `${formattedMinutes}:${formattedSeconds}`;
 };
 
+function setupSongClickListeners() {
+    Array.from(document.querySelector(".song-list").getElementsByTagName("li")).forEach(e => {
+        e.addEventListener("click", () => {
+            let songInfo = e.querySelector(".info");
+            let track = `${songInfo.firstElementChild.innerHTML}-${songInfo.children[1].innerHTML}.mp3`;
+            playMusic(track);
+        });
+    });
+}
+
 async function main() {
     // For features in progress
     featureInProgress();
 
-    // Get the list of all the songs
-    songs = await getSongs();
-    playMusic(songs[0], true)
+    // Last card's margin for responsiveness
+    document.querySelectorAll(".card")[document.querySelectorAll(".card").length - 1].id = "lastcard";
 
-    // Show all the songs in the playlist
-    let songUL = document.querySelector(".song-list").getElementsByTagName("ul")[0]
-    for (const song of songs) {
-        let songName = decodeURI(song).split("-");
-        if (songName.length >= 2) {
-            songUL.innerHTML += `<li>
-                <img class="invert" src="assets/images/music.svg" alt="music">
-                <div class="info">
-                    <div>${songName[0].replace(".mp3", "")}</div>
-                    <div>${songName[1].replace(".mp3", "")}</div>
-                </div>
-                <div class="playnow">
-                    <span>Play Now</span>
-                    <img class="invert" src="assets/images/play.svg" alt="play">
-                </div>
-            </li>`;
-        }
-    }
+    // Get the list of all the songs
+    await getSongs("trending");
+    playMusic(songs[0], true);
+
+    // Display all the albums on the page
+    
 
     // Attach an event listner to each song
-    Array.from(document.querySelector(".song-list").getElementsByTagName("li")).forEach(item => {
-        item.addEventListener("click", element => {
-            let track = (item.querySelector(".info").firstElementChild.innerHTML) + "-" + (item.querySelector(".info").children[1].innerHTML) + ".mp3";
-            playMusic(track);
-        })
-    })
+    setupSongClickListeners()
 
     // Attach an event listner to play, next and previous
     play.addEventListener("click", () => {
@@ -170,8 +179,8 @@ async function main() {
     })
 
     // Add an event listner to directly mute and unmute
-    document.querySelector(".volume img").addEventListener("click", ()=>{
-        if (currentSong.volume>0) {
+    document.querySelector(".volume img").addEventListener("click", () => {
+        if (currentSong.volume > 0) {
             currentSong.volume = 0;
             document.querySelector(".volume").getElementsByTagName("img")[0].src = "assets/images/volume-mute.svg";
             document.querySelector(".range").getElementsByTagName("input")[0].value = 0;
@@ -183,6 +192,17 @@ async function main() {
             document.querySelector(".range").getElementsByTagName("input")[0].value = 100;
         }
     })
+
+    // Dynamic playlists
+    Array.from(document.getElementsByClassName("card")).forEach(e => {
+        e.addEventListener("click", async item => {
+            await getSongs(item.currentTarget.dataset.folder);
+            playMusic(songs[0]);
+
+            // Set up click event listeners for songs after loading a new playlist
+            setupSongClickListeners();
+        });
+    });
 
 }
 

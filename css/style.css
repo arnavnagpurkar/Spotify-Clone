@@ -114,9 +114,9 @@ body {
 
 .card-container {
     display: flex;
-    margin: 40px;
-    gap: 10px;
     flex-wrap: wrap;
+    gap: 10px;
+    margin: 40px;
     height: 70vh;
     overflow-y: auto;
 }
@@ -129,6 +129,8 @@ body {
     background-color: #181818;
     position: relative;
     transition: all 100ms ease-in-out;
+    margin-bottom: 20px;
+    cursor: pointer;
 }
 
 .card>* {
@@ -389,6 +391,7 @@ input[type="range"] {
     background: #ddd;
     border-radius: 25px;
     outline: none;
+    cursor: pointer;
 }
 
 input[type="range"]::-webkit-slider-thumb {
@@ -418,7 +421,7 @@ input[type="range"]::-moz-range-thumb:hover {
 
 /* Making it responsive */
 
-@media (max-width: 1450px) {
+@media (max-width: 1500px) {
     .left {
         position: absolute;
         left: -140%;
@@ -472,13 +475,8 @@ input[type="range"]::-moz-range-thumb:hover {
         margin: 0;
     }
 
-    .card {
-        margin-top: 105px;
-        scale: 1.35;
-    }
-
     .card:hover {
-        scale: 1.4;
+        scale: 1.1;
     }
 
     .abovebar {
@@ -518,6 +516,10 @@ input[type="range"]::-moz-range-thumb:hover {
         position: relative;
         left: 15px;
     }
+
+    #lastcard {
+        margin-bottom: 255px;
+    }
 }
 
 @media (max-width: 600px) {
@@ -551,13 +553,8 @@ input[type="range"]::-moz-range-thumb:hover {
         padding: 12px;
     }
 
-    .card {
-        margin-top: 105px;
-        scale: 1.25;
-    }
-
     .card:hover {
-        scale: 1.3;
+        scale: 1.1;
     }
 }
 
