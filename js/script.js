@@ -4,36 +4,34 @@ let currentFolder;
 
 async function getSongs(folder) {
     currentFolder = folder;
-    let response = await fetch(`/assets/songs/${folder}/`);
-    let text = await response.text();
-    let div = document.createElement('div');
-    div.innerHTML = text;
-    let as = div.getElementsByTagName('a');
-    songs = [];
 
-    for (let index = 0; index < as.length; index++) {
-        const element = as[index];
-        if (element.href.endsWith(".mp3")) {
-            songs.push(element.href.split(`/songs/${folder}/`)[1]);
+    try {
+        const response = await fetch(`https://api.github.com/repos/arnavnagpurkar/Spotify-Clone/contents/assets/songs/${folder}`);
+        const data = await response.json();
+
+        songs = data
+            .filter(item => item.type === 'file' && item.name.endsWith('.mp3'))
+            .map(item => item.name);
+
+        // Show all the songs in the playlist
+        let songUL = document.querySelector(".song-list").getElementsByTagName("ul")[0];
+        songUL.innerHTML = "";
+        for (const song of songs) {
+            let songName = decodeURI(song).split("-");
+            songUL.innerHTML += `<li>
+                <img class="invert" src="assets/images/music.svg" alt="music">
+                <div class="info">
+                    <div>${songName[0].replace(".mp3", "")}</div>
+                    <div>${songName[1].replace(".mp3", "")}</div>
+                </div>
+                <div class="playnow">
+                    <span>Play Now</span>
+                    <img class="invert" src="assets/images/play.svg" alt="play">
+                </div>
+            </li>`;
         }
-    }
-
-    // Show all the songs in the playlist
-    let songUL = document.querySelector(".song-list").getElementsByTagName("ul")[0];
-    songUL.innerHTML = "";
-    for (const song of songs) {
-        let songName = decodeURI(song).split("-");
-        songUL.innerHTML += `<li>
-            <img class="invert" src="assets/images/music.svg" alt="music">
-            <div class="info">
-                <div>${songName[0].replace(".mp3", "")}</div>
-                <div>${songName[1].replace(".mp3", "")}</div>
-            </div>
-            <div class="playnow">
-                <span>Play Now</span>
-                <img class="invert" src="assets/images/play.svg" alt="play">
-            </div>
-        </li>`;
+    } catch (error) {
+        console.error('Error fetching songs:', error);
     }
 }
 
@@ -130,7 +128,7 @@ async function displayAlbums() {
         });
     });
 
-    
+
 
     // Last card's margin for responsiveness
     let cards = document.querySelectorAll(".card");
