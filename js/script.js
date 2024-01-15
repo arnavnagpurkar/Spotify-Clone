@@ -91,67 +91,48 @@ function setupSongClickListeners() {
 }
 
 async function displayAlbums() {
-    try {
-        const response = await fetch(`https://api.github.com/repos/arnavnagpurkar/Spotify-Clone/contents/assets/songs/`);
-        const data = await response.json();
+    let response = await fetch(`http://127.0.0.1:5000/assets/songs/`);
+    let text = await response.text();
+    let div = document.createElement('div');
+    div.innerHTML = text;
+    let anchors = div.getElementsByTagName("a");
 
-        let cardContainer = document.querySelector(".spotify-playlists .card-container");
+    for (let index = 0; index < anchors.length; index++) {
+        const e = anchors[index];
 
-        if (!cardContainer) {
-            console.error('Error fetching albums: .card-container not found.');
-            return;
+        if (e.href.includes("/songs/")) {
+            let folder = e.href.split("/").slice(-2)[0];
+            // Get the metadata of the folder
+            let a = await fetch(`http://127.0.0.1:5000/assets/songs/${folder}/info.json/`);
+            let response = await a.json();
+            let cardContainer = document.querySelector(".card-container");
+            cardContainer.innerHTML += `<div data-folder="${folder}" class="card">
+                <div class="play">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 20V4L19 12L5 20Z" stroke="#000" fill="#000" stroke-width="1.5" stroke-linejoin="round" />
+                    </svg>
+                </div>
+                <img src="assets/songs/${folder}/cover.jpg" alt="playlist img">
+                <h2>${response.title}</h2>
+                <p>${response.description}</p>
+            </div>`;
         }
-
-        cardContainer.innerHTML = "";
-
-        for (let index = 0; index < data.length; index++) {
-            const e = data[index];
-
-            if (e.type === 'dir') {
-                let folder = e.name;
-
-                // Get the metadata of the folder
-                let a = await fetch(`/assets/songs/${folder}/info.json`);
-
-                if (a.status !== 200) {
-                    console.error(`Error fetching info.json for ${folder}: ${a.statusText}`);
-                    continue;
-                }
-
-                let response = await a.json();
-
-                cardContainer.innerHTML += `<div data-folder="${folder}" class="card">
-                    <div class="play">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M5 20V4L19 12L5 20Z" stroke="#000" fill="#000" stroke-width="1.5" stroke-linejoin="round" />
-                        </svg>
-                    </div>
-                    <img src="assets/songs/${folder}/cover.jpg" alt="playlist img">
-                    <h2>${response.title || 'Unknown'}</h2>
-                    <p>${response.description || 'No description'}</p>
-                </div>`;
-            }
-        }
-
-        // Dynamic playlists
-        Array.from(cardContainer.querySelectorAll(".card")).forEach(e => {
-            e.addEventListener("click", async item => {
-                await getSongs(item.currentTarget.dataset.folder);
-                playMusic(songs[0]);
-
-                // Set up click event listeners for songs after loading a new playlist
-                setupSongClickListeners();
-            });
-        });
-
-        // Last card's margin for responsiveness
-        let cards = cardContainer.querySelectorAll(".card");
-        if (cards.length > 0) {
-            cards[cards.length - 1].id = "lastcard";
-        }
-    } catch (error) {
-        console.error('Error fetching albums:', error);
     }
+
+    // Dynamic playlists
+    Array.from(document.getElementsByClassName("card")).forEach(e => {
+        e.addEventListener("click", async item => {
+            await getSongs(item.currentTarget.dataset.folder);
+            playMusic(songs[0]);
+
+            // Set up click event listeners for songs after loading a new playlist
+            setupSongClickListeners();
+        });
+    });
+
+    // Last card's margin for responsiveness
+    let cards = document.querySelectorAll(".card");
+    cards[cards.length - 1].id = "lastcard";
 }
 
 async function main() {
