@@ -42,6 +42,7 @@ body {
     width: 14px;
     padding-top: 14px;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .heading {
