@@ -9,6 +9,7 @@ This project is a Spotify clone that replicates some of the key features of the 
 - Playback controls and volume seekbar
 - Smart JS (if anyone forks and add a folder in songs dir with info.json and cover.jpg, it will be automatically detected as a playlist)
 - User Friendly UI
+- Can download songs for free, without creating account!!
 
 ## Getting Started:
 
