@@ -135,6 +135,17 @@ async function displayAlbums() {
     cards[cards.length - 1].id = "lastcard";
 }
 
+async function playNextSong() {
+    let index = songs.indexOf(currentSong.src.split("/").slice(-1)[0]);
+    if (index === songs.length - 1) {
+        // If it's the last song, loop back to the first one
+        playMusic(songs[0]);
+    } else {
+        // Play the next song in the playlist
+        playMusic(songs[index + 1]);
+    }
+}
+
 async function main() {
     // For features in progress
     featureInProgress();
@@ -166,6 +177,10 @@ async function main() {
         document.querySelector(".songtime").innerHTML = `${secondsToMinutesSeconds(currentSong.currentTime)} / ${secondsToMinutesSeconds(currentSong.duration)}`;
         document.querySelector(".circle").style.left = `${(currentSong.currentTime / currentSong.duration) * 100}%`;
     });
+
+    currentSong.addEventListener("ended", () => {
+        playNextSong();
+    })
 
     // Add an event listener to seekbar
     document.querySelector(".seekbar").addEventListener("click", e => {
