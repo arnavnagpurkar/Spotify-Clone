@@ -244,6 +244,16 @@ async function main() {
             document.querySelector(".range").getElementsByTagName("input")[0].value = 100;
         }
     });
+
+    // Add an event listner to download
+    Array.from(document.getElementsByClassName("download")).forEach(e => {
+        e.addEventListener("click", () => {
+            let a = document.createElement("a");
+            a.download = currentSong.src;
+            a.href = a.download;
+            a.click();
+        })
+    })
 }
 
 main();

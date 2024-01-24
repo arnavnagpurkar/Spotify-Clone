@@ -317,6 +317,29 @@ body {
     scale: 1.05;
 }
 
+.download {
+    margin-top: 5px;
+}
+
+.download span {
+    color: black;
+    font-weight: 600;
+    margin-right: 5px;
+    font-size: 17px;
+}
+
+.download {
+    cursor: pointer;
+}
+
+.download img {
+    width: 28px;
+}
+
+.download:hover {
+    scale: 1.02;
+}
+
 .songinfo {
     width: 255px;
 }
@@ -360,7 +383,7 @@ body {
     display: flex;
     margin: 0 15px;
     padding: 0 20px;
-    width: 350px;
+    width: 500px;
 }
 
 .volume {
@@ -504,6 +527,10 @@ input[type="range"]::-moz-range-thumb:hover {
         justify-content: center;
         text-align: center;
         width: 100%;
+    }
+
+    .download span {
+        font-size: 1.5em;
     }
 
     .spotify-playlists {
