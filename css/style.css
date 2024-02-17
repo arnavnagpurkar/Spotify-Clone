@@ -463,6 +463,7 @@ input[type="range"]::-moz-range-thumb:hover {
 
     .playbar {
         width: calc(100vw - 85px);
+        font-size: 14px;
     }
 
     .seekbar {
@@ -507,19 +508,18 @@ input[type="range"]::-moz-range-thumb:hover {
 
     .abovebar {
         flex-direction: column;
-        gap: 20px;
     }
 
     .abovebar>* {
         padding: 5px 0;
     }
 
-    .songbuttons img {
-        width: 40px;
+    .songbuttons {
+        padding-bottom: 0;
     }
 
-    .songtime {
-        padding-bottom: 30px;
+    .songbuttons img {
+        width: 35px;
     }
 
     .songinfo,
@@ -567,6 +567,10 @@ input[type="range"]::-moz-range-thumb:hover {
 
     .playbar {
         width: calc(100vw - 60px);
+    }
+
+    .time-volume {
+        width: 88%;
     }
 }
 
