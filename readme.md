@@ -14,7 +14,7 @@ This project is a Spotify clone that replicates some of the key features of the 
 ## Getting Started:
 
 ### Using:
-You can use the project by going on [https://arnav-spotify.freewebhostmost.com/](https://arnav-spotify.freewebhostmost.com/)
+You can use the project by going on [https://spotify-arnav.freewebhostmost.com/](https://spotify-arnav.freewebhostmost.com/)
 
 ### Fork
 Make sure you have git installed on your computer !!
